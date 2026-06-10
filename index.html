@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Proxy Browser</title>
+  <title>Ultraviolet Proxy Browser</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">Proxy Browser</div>
+    <div class="brand">UV Proxy Browser</div>
     <div class="connection">
       <span>Backend: <code id="backendUrl"></code></span>
     </div>
@@ -25,7 +25,10 @@
     </section>
 
     <section class="content">
-      <iframe id="viewFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+      <iframe
+        id="viewFrame"
+        sandbox="allow-scripts allow-forms allow-same-origin"
+      ></iframe>
     </section>
 
     <section class="statusbar">
