@@ -27,28 +27,10 @@ body {
   letter-spacing: 0.04em;
 }
 
-.connection {
-  display: flex;
-  gap: 0.4rem;
-  align-items: center;
-}
-
-.connection input {
-  padding: 0.3rem 0.5rem;
+.connection code {
+  background: #111827;
+  padding: 0.1rem 0.3rem;
   border-radius: 4px;
-  border: 1px solid #374151;
-  background: #020617;
-  color: #e5e7eb;
-  min-width: 260px;
-}
-
-.connection button {
-  padding: 0.3rem 0.7rem;
-  border-radius: 4px;
-  border: none;
-  background: #22c55e;
-  color: #020617;
-  cursor: pointer;
 }
 
 .layout {
