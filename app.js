@@ -1,3 +1,6 @@
+// CHANGE THIS to your Ultraviolet backend URL:
+const UV_BACKEND = "https://your-ultraviolet-backend.example.com";
+
 const addressBar = document.getElementById("addressBar");
 const goBtn = document.getElementById("btnGo");
 const backBtn = document.getElementById("btnBack");
@@ -7,8 +10,7 @@ const frame = document.getElementById("viewFrame");
 const statusText = document.getElementById("statusText");
 const backendUrlEl = document.getElementById("backendUrl");
 
-const backendBase = ""; // same origin as the HTML (served by Node)
-backendUrlEl.textContent = window.location.origin;
+backendUrlEl.textContent = UV_BACKEND || "not set";
 
 let historyStack = [];
 let historyIndex = -1;
@@ -25,15 +27,25 @@ function normalizeUrl(url) {
   return url;
 }
 
+function buildUvUrl(targetUrl) {
+  // Ultraviolet usually uses /service/<encoded-url>
+  return `${UV_BACKEND.replace(/\/+$/, "")}/service/${encodeURIComponent(
+    targetUrl
+  )}`;
+}
+
 function navigate(url, pushHistory = true) {
+  if (!UV_BACKEND) {
+    setStatus("Set UV_BACKEND in app.js first.");
+    return;
+  }
   if (!url) return;
 
   const normalized = normalizeUrl(url);
-  const encoded = encodeURIComponent(normalized);
-  const proxiedUrl = `${backendBase}/proxy?url=${encoded}`;
+  const proxied = buildUvUrl(normalized);
 
   setStatus("Loading " + normalized + " …");
-  frame.src = proxiedUrl;
+  frame.src = proxied;
 
   if (pushHistory) {
     historyStack = historyStack.slice(0, historyIndex + 1);
