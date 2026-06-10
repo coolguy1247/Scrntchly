@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Minimal Proxy Browser</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Proxy Browser</div>
+    <div class="connection">
+      <label for="proxyUrl">Proxy server:</label>
+      <input id="proxyUrl" type="text" value="https://your-proxy.example.com" />
+      <button id="saveProxy">Set</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="toolbar">
+      <button id="btnBack">←</button>
+      <button id="btnForward">→</button>
+      <button id="btnReload">⟳</button>
+
+      <input id="addressBar" type="text" placeholder="Enter URL (https://...)" />
+      <button id="btnGo">Go</button>
+    </section>
+
+    <section class="content">
+      <iframe id="viewFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+    </section>
+
+    <section class="statusbar">
+      <span id="statusText">Idle</span>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
