@@ -1,5 +1,5 @@
-// CHANGE THIS to your Ultraviolet backend URL:
-const UV_BACKEND = "https://your-ultraviolet-backend.example.com";
+// Set your Rammerhead backend here:
+const RH_BACKEND = "https://browser.rammerhead.org";
 
 const addressBar = document.getElementById("addressBar");
 const goBtn = document.getElementById("btnGo");
@@ -10,7 +10,7 @@ const frame = document.getElementById("viewFrame");
 const statusText = document.getElementById("statusText");
 const backendUrlEl = document.getElementById("backendUrl");
 
-backendUrlEl.textContent = UV_BACKEND || "not set";
+backendUrlEl.textContent = RH_BACKEND;
 
 let historyStack = [];
 let historyIndex = -1;
@@ -27,22 +27,17 @@ function normalizeUrl(url) {
   return url;
 }
 
-function buildUvUrl(targetUrl) {
-  // Ultraviolet usually uses /service/<encoded-url>
-  return `${UV_BACKEND.replace(/\/+$/, "")}/service/${encodeURIComponent(
-    targetUrl
-  )}`;
-}
-
 function navigate(url, pushHistory = true) {
-  if (!UV_BACKEND) {
-    setStatus("Set UV_BACKEND in app.js first.");
+  if (!RH_BACKEND) {
+    setStatus("Set RH_BACKEND in app.js first.");
     return;
   }
   if (!url) return;
 
   const normalized = normalizeUrl(url);
-  const proxied = buildUvUrl(normalized);
+
+  // Rammerhead uses ?url=<target>
+  const proxied = `${RH_BACKEND}/?url=${encodeURIComponent(normalized)}`;
 
   setStatus("Loading " + normalized + " …");
   frame.src = proxied;
