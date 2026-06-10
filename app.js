@@ -1,5 +1,3 @@
-const proxyUrlInput = document.getElementById("proxyUrl");
-const saveProxyBtn = document.getElementById("saveProxy");
 const addressBar = document.getElementById("addressBar");
 const goBtn = document.getElementById("btnGo");
 const backBtn = document.getElementById("btnBack");
@@ -7,59 +5,53 @@ const forwardBtn = document.getElementById("btnForward");
 const reloadBtn = document.getElementById("btnReload");
 const frame = document.getElementById("viewFrame");
 const statusText = document.getElementById("statusText");
+const backendUrlEl = document.getElementById("backendUrl");
+
+const backendBase = ""; // same origin as the HTML (served by Node)
+backendUrlEl.textContent = window.location.origin;
 
 let historyStack = [];
 let historyIndex = -1;
-let proxyBase = localStorage.getItem("proxyBase") || proxyUrlInput.value;
-
-proxyUrlInput.value = proxyBase;
 
 function setStatus(text) {
   statusText.textContent = text;
 }
 
-saveProxyBtn.addEventListener("click", () => {
-  proxyBase = proxyUrlInput.value.trim();
-  localStorage.setItem("proxyBase", proxyBase);
-  setStatus("Proxy set to " + proxyBase);
-});
-
-function navigate(url, pushHistory = true) {
-  if (!proxyBase) {
-    setStatus("Set a proxy server first.");
-    return;
-  }
-
+function normalizeUrl(url) {
+  url = url.trim();
   if (!/^https?:\/\//i.test(url)) {
     url = "https://" + url;
   }
+  return url;
+}
 
-  const encoded = encodeURIComponent(url);
-  const proxiedUrl = `${proxyBase.replace(/\/+$/, "")}/proxy?url=${encoded}`;
+function navigate(url, pushHistory = true) {
+  if (!url) return;
 
-  setStatus("Loading " + url + " …");
+  const normalized = normalizeUrl(url);
+  const encoded = encodeURIComponent(normalized);
+  const proxiedUrl = `${backendBase}/proxy?url=${encoded}`;
 
-  // Load via proxy into iframe
+  setStatus("Loading " + normalized + " …");
   frame.src = proxiedUrl;
 
   if (pushHistory) {
-    // Trim forward history
     historyStack = historyStack.slice(0, historyIndex + 1);
-    historyStack.push(url);
+    historyStack.push(normalized);
     historyIndex = historyStack.length - 1;
   }
 
-  addressBar.value = url;
+  addressBar.value = normalized;
 }
 
 goBtn.addEventListener("click", () => {
-  const url = addressBar.value.trim();
+  const url = addressBar.value;
   if (url) navigate(url, true);
 });
 
 addressBar.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
-    const url = addressBar.value.trim();
+    const url = addressBar.value;
     if (url) navigate(url, true);
   }
 });
@@ -67,27 +59,23 @@ addressBar.addEventListener("keydown", (e) => {
 backBtn.addEventListener("click", () => {
   if (historyIndex > 0) {
     historyIndex--;
-    const url = historyStack[historyIndex];
-    navigate(url, false);
+    navigate(historyStack[historyIndex], false);
   }
 });
 
 forwardBtn.addEventListener("click", () => {
   if (historyIndex < historyStack.length - 1) {
     historyIndex++;
-    const url = historyStack[historyIndex];
-    navigate(url, false);
+    navigate(historyStack[historyIndex], false);
   }
 });
 
 reloadBtn.addEventListener("click", () => {
   if (historyIndex >= 0) {
-    const url = historyStack[historyIndex];
-    navigate(url, false);
+    navigate(historyStack[historyIndex], false);
   }
 });
 
-// Optional: update status when iframe finishes loading
 frame.addEventListener("load", () => {
   setStatus("Loaded");
 });
