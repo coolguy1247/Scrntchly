@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Minimal Proxy Browser</title>
+  <title>Proxy Browser</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -10,9 +10,7 @@
   <header class="topbar">
     <div class="brand">Proxy Browser</div>
     <div class="connection">
-      <label for="proxyUrl">Proxy server:</label>
-      <input id="proxyUrl" type="text" value="https://your-proxy.example.com" />
-      <button id="saveProxy">Set</button>
+      <span>Backend: <code id="backendUrl"></code></span>
     </div>
   </header>
 
