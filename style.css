@@ -1,0 +1,105 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  background: #0f172a;
+  color: #e5e7eb;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background: #020617;
+  border-bottom: 1px solid #1f2937;
+}
+
+.brand {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.connection {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.connection input {
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #374151;
+  background: #020617;
+  color: #e5e7eb;
+  min-width: 260px;
+}
+
+.connection button {
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  border: none;
+  background: #22c55e;
+  color: #020617;
+  cursor: pointer;
+}
+
+.layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.8rem;
+  background: #020617;
+  border-bottom: 1px solid #1f2937;
+}
+
+.toolbar button {
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  border: none;
+  background: #1f2937;
+  color: #e5e7eb;
+  cursor: pointer;
+}
+
+#addressBar {
+  flex: 1;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #374151;
+  background: #020617;
+  color: #e5e7eb;
+}
+
+.content {
+  flex: 1;
+  background: #020617;
+}
+
+#viewFrame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #020617;
+}
+
+.statusbar {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  background: #020617;
+  border-top: 1px solid #1f2937;
+  color: #9ca3af;
+}
